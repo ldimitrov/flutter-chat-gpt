@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'chat_message.dart';
+import 'model.dart';
 
 void main() => runApp(ChatGptClient());
 
 class ChatGptClient extends StatefulWidget {
+  const ChatGptClient({super.key});
+
   @override
   _ChatGptAppState createState() => _ChatGptAppState();
 }
 
 class _ChatGptAppState extends State<ChatGptClient> {
-  final TextEditingController textEditingController = TextEditingController();
-  // final _scrollController = ScrollController();
+  final _textEditingController = TextEditingController();
+  final _scrollController = ScrollController();
+  final List<ChatMessage> _messages = [];
   late bool isLoading;
 
   @override
@@ -30,7 +35,7 @@ class _ChatGptAppState extends State<ChatGptClient> {
         body: Column(
           children: [
             //chat body
-            // Expanded(child: _buildList()),
+            Expanded(child: _chatMessagesList()),
             Visibility(
               visible: isLoading,
               child: const Padding(
@@ -57,7 +62,7 @@ class _ChatGptAppState extends State<ChatGptClient> {
       child: TextField(
         textCapitalization: TextCapitalization.sentences,
         style: const TextStyle(color: Colors.white),
-        controller: textEditingController,
+        controller: _textEditingController,
         decoration: const InputDecoration(
             fillColor: Colors.blueGrey,
             filled: true,
@@ -78,10 +83,23 @@ class _ChatGptAppState extends State<ChatGptClient> {
         child: IconButton(
             icon: const Icon(
               Icons.send_rounded,
-
             ),
             onPressed: () {}),
       ),
     );
+  }
+
+  ListView _chatMessagesList() {
+    return ListView.builder(
+        itemCount: _messages.length,
+        controller: _scrollController,
+        itemBuilder: ((context, index) {
+
+          var message = _messages[index];
+          return ChatMessageWidget(
+            text: message.text,
+            type: message.type,
+          );
+        }));
   }
 }
