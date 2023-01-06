@@ -18,11 +18,12 @@ class ChatMessageWidget extends StatelessWidget {
           type == ChatMessageType.bot
               ? Container(
                   margin: const EdgeInsets.only(right: 16),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     backgroundColor: Colors.blueGrey,
-                    child: Icon(
-                      Icons.cloud,
+                    child: Image.asset(
+                      'assets/chatgpt.png',
                       color: Colors.white,
+                      scale: 1.0,
                     ),
                   ),
                 )
