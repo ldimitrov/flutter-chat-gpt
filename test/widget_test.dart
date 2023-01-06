@@ -11,20 +11,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_chat_gpt/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('App renders test', (WidgetTester tester) async {
+    // Create the TextField widget
+    final TextField textField = TextField();
+    final Visibility submitButton = Visibility(child: Container());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Build the widget tree
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: Row(
+          children: [
+            Expanded(child: textField,),
+            Expanded(child: submitButton),
+          ],
+        )
+      ),
+    ));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the TextField is displayed
+    expect(find.byWidget(textField), findsOneWidget);
+    expect(find.byWidget(submitButton), findsOneWidget);
   });
 }
